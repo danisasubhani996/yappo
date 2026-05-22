@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+<link
+  rel="icon"
+  href="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+/>
+  <meta
+    name="viewport"
+    content="
+      width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no
+    "
+  />
+
+  <title>
+    Yappo
+  </title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="
+    https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css
+    "
+  />
+
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside class="sidebar">
+
+    <!-- LOGO -->
+
+    <div class="logo">
+      💬 Chats
+    </div>
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        id="searchUser"
+        placeholder="Search user..."
+      />
+
+    </div>
+
+    <!-- USER LIST -->
+
+    <div class="online-section">
+
+      <div id="onlineUsers"></div>
+
+    </div>
+
+  </aside>
+
+  <!-- =====================================================
+       MAIN CHAT AREA
+  ====================================================== -->
+
+  <main class="main">
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <div class="topbar">
+
+      <!-- CHAT USER -->
+       <div class="left-topbar">
+
+  <button id="menuBtn" class="menu-btn">
+    ☰
+  </button>
+
+  <div class="chat-user">
+
+    <img
+      id="chatUserPic"
+      class="chat-user-pic"
+      src="https://i.imgur.com/HeIi0wU.png"
+    />
+
+    <div>
+
+      <h3 id="chatTitle">
+        Select User
+      </h3>
+
+      <p id="userStatus">
+        offline
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+      <!-- HIDDEN PROFILE INPUT -->
+
+      <input
+        type="file"
+        id="profileInput"
+        hidden
+        accept="image/*"
+      />
+
+      <!-- ACTION BUTTONS -->
+
+      <div class="topbar-actions">
+
+        <!-- PROFILE -->
+
+        <button
+          id="changeProfileBtn"
+          title="Change Profile"
+        >
+
+          <i class="fa-solid fa-user-pen"></i>
+
+        </button>
+
+        <!-- CLEAR CHAT -->
+
+        <button
+          id="clearChatBtn"
+          title="Clear Chat"
+        >
+
+          <i class="fa-solid fa-trash"></i>
+
+        </button>
+
+        <!-- THEME -->
+
+        <button
+          id="themeToggle"
+          title="Theme"
+        >
+
+          <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- =====================================================
+         PINNED MESSAGE
+    ====================================================== -->
+
+    <div
+      id="pinnedMessage"
+      class="pinned-message"
+    ></div>
+
+    <!-- =====================================================
+         MESSAGES
+    ====================================================== -->
+
+    <div
+      id="messages"
+      class="messages"
+    ></div>
+
+    <!-- =====================================================
+         TYPING
+    ====================================================== -->
+
+    <div
+      id="typingIndicator"
+      class="typing-indicator"
+    ></div>
+
+    <!-- =====================================================
+         INPUT AREA
+    ====================================================== -->
+
+    <div class="input-area">
+
+      <!-- =====================================================
+           REPLY PREVIEW
+      ====================================================== -->
+
+      <div
+        id="replyPreview"
+        class="reply-preview"
+      >
+
+        <div>
+
+          <div
+            id="replySender"
+            class="reply-sender"
+          ></div>
+
+          <div
+            id="replyText"
+            class="reply-text"
+          ></div>
+
+        </div>
+
+        <button id="cancelReply">
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+      </div>
+
+      <!-- =====================================================
+           EMOJI BUTTON
+      ====================================================== -->
+
+      <button
+        class="emoji-btn"
+        title="Emoji"
+      >
+
+        😊
+
+      </button>
+
+      <!-- =====================================================
+           EMOJI PANEL
+      ====================================================== -->
+
+      <div
+        id="emojiPanel"
+        class="emoji-panel"
+      >
+
+        <input
+          type="text"
+          id="emojiSearch"
+          placeholder="Search emoji..."
+        />
+
+        <div id="emojiList"></div>
+
+      </div>
+
+      <!-- =====================================================
+           MESSAGE INPUT
+      ====================================================== -->
+
+      <input
+        type="text"
+        id="messageInput"
+        placeholder="Type a message"
+        autocomplete="off"
+      />
+
+      <!-- =====================================================
+           FILE INPUT
+      ====================================================== -->
+
+      <input
+        type="file"
+        id="fileInput"
+        hidden
+      />
+
+      <!-- =====================================================
+           FILE BUTTON
+      ====================================================== -->
+
+      <button
+        id="fileBtn"
+        title="Attach File"
+      >
+
+        <i class="fa-solid fa-paperclip"></i>
+
+      </button>
+
+      <!-- =====================================================
+           VOICE BUTTON
+      ====================================================== -->
+
+      <button
+        id="voiceBtn"
+        title="Voice Message"
+      >
+
+        <i class="fa-solid fa-microphone"></i>
+
+      </button>
+
+      <!-- =====================================================
+           SEND BUTTON
+      ====================================================== -->
+
+      <button
+        id="sendBtn"
+        title="Send"
+      >
+
+        <i class="fa-solid fa-paper-plane"></i>
+
+      </button>
+
+    </div>
+
+  </main>
+
+</div>
+
+<!-- =====================================================
+     MESSAGE MENU
+====================================================== -->
+
+<div
+  id="messageMenu"
+  class="message-menu"
+  style="display:none;"
+>
+
+  <div data-action="reply">
+
+    <i class="fa-solid fa-reply"></i>
+    Reply
+
+  </div>
+
+  <div data-action="copy">
+
+    <i class="fa-solid fa-copy"></i>
+    Copy
+
+  </div>
+
+  <div data-action="forward">
+
+    <i class="fa-solid fa-share"></i>
+    Forward
+
+  </div>
+
+  <div data-action="pin">
+
+    <i class="fa-solid fa-thumbtack"></i>
+    Pin
+
+  </div>
+
+  <div data-action="delete-me">
+
+    <i class="fa-solid fa-trash"></i>
+    Delete For Me
+
+  </div>
+
+  <div data-action="delete-everyone">
+
+    <i class="fa-solid fa-trash-can"></i>
+    Delete For Everyone
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     REACTION PICKER
+====================================================== -->
+
+<div
+  id="reactionPicker"
+  class="reaction-picker"
+  style="display:none;"
+>
+
+  <span>❤️</span>
+  <span>😂</span>
+  <span>🔥</span>
+  <span>👍</span>
+  <span>😮</span>
+  <span>😭</span>
+
+</div>
+
+<!-- =====================================================
+     FORWARD MODAL
+====================================================== -->
+
+<div
+  id="forwardModal"
+  class="forward-modal"
+>
+
+  <div class="forward-box">
+
+    <div class="forward-header">
+
+      <h3>
+        Forward Message
+      </h3>
+
+      <button id="closeForwardModal">
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+    </div>
+
+    <div id="forwardUsers"></div>
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     NOTIFICATION SOUND
+====================================================== -->
+
+<audio id="notificationSound">
+
+  <source
+    src="
+    https://actions.google.com/sounds/v1/notifications/message_pop_alert.ogg
+    "
+    type="audio/ogg"
+  >
+
+</audio>
+
+<!-- =====================================================
+     SOCKET.IO
+====================================================== -->
+
+<script src="/socket.io/socket.io.js"></script>
+
+<!-- =====================================================
+     MAIN SCRIPT
+====================================================== -->
+
+<script src="script.js"></script>
+
+<div
+  id="imageViewer"
+  style="
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:999999;
+    padding:20px;
+    box-sizing:border-box;
+  "
+>
+
+ <button
+  id="closeViewer"
+  style="
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:none;
+    border:none;
+    color:white;
+    font-size:42px;
+    cursor:pointer;
+  z-index:99999999;
+    width:55px;
+    height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  "
+>
+  ✕
+</button>
+
+ <img
+  id="viewerImg"
+  style="
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+    position:relative;
+    z-index:1;
+  "
+>
+
+</div>
+</body>
+
+</html>
