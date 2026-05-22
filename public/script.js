@@ -127,9 +127,7 @@ let username = localStorage.getItem("username");
 
 if (!username) {
 
-  username = ""; // empty initially
-
-  const name = prompt("Enter your username");
+  const name = prompt("Enter username");
 
   if (name && name.trim() !== "") {
     username = name.trim();

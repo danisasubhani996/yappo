@@ -211,68 +211,41 @@ io.on(
   /* ====================================================
      REGISTER
   ==================================================== */
-socket.on(
-  "register",
-  (data)=>{
+socket.on("register", (data) => {
+  if (!data.username || data.username.trim() === "") return;
 
-    if(
-      !data.username ||
-      data.username.trim() === ""
-    ){
-      return;
+  const username = data.username.trim();
+
+  socket.username = username;
+
+  // ❌ if already online → disconnect OLD socket first
+  if (onlineUsers[username]) {
+    const oldSocketId = onlineUsers[username].socketId;
+
+    const oldSocket = io.sockets.sockets.get(oldSocketId);
+
+    if (oldSocket && oldSocket.id !== socket.id) {
+      oldSocket.disconnect(true);
     }
-
-    const username =
-    data.username.trim();
-
-    // prevent duplicate usernames
-    if(
-      onlineUsers[username]
-    ){
-
-      socket.emit(
-        "username-taken"
-      );
-
-      return;
-
-    }
-
-    socket.username =
-    username;
-
-    onlineUsers[username] = {
-
-      socketId:
-      socket.id,
-
-      profilePic:
-
-      data.profilePic ||
-
-      "https://ui-avatars.com/api/?name=User"
-
-    };
-
-    registeredUsers[
-      username
-    ] = {
-
-      profilePic:
-
-      data.profilePic ||
-
-      "https://ui-avatars.com/api/?name=User"
-
-    };
-
-    saveUsers();
-
-    emitPresence();
-
   }
-);
 
+  // ✅ overwrite safely (IMPORTANT)
+  onlineUsers[username] = {
+    socketId: socket.id,
+    profilePic:
+      data.profilePic ||
+      "https://ui-avatars.com/api/?name=User"
+  };
+
+  registeredUsers[username] = {
+    profilePic:
+      data.profilePic ||
+      "https://ui-avatars.com/api/?name=User"
+  };
+
+  saveUsers();
+  emitPresence();
+});
   /* ====================================================
      JOIN CHAT
   ==================================================== */
