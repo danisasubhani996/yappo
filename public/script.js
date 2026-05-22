@@ -123,35 +123,22 @@ document.getElementById("closeForwardModal");
 /* ======================================================
    USER
 ====================================================== */
+let username = localStorage.getItem("username");
 
-let username =
-localStorage.getItem("username");
+if (!username) {
 
-if(!username){
+  username = ""; // empty initially
 
-  username =
-  prompt("Enter your name");
+  const name = prompt("Enter your username");
 
-  if(
-    !username ||
-    username.trim() === ""
-  ){
-
-    username =
-    "User" +
-    Math.floor(
-      Math.random()*9999
-    );
-
+  if (name && name.trim() !== "") {
+    username = name.trim();
+  } else {
+    username = "User" + Math.floor(Math.random() * 9999);
   }
 
-  localStorage.setItem(
-    "username",
-    username
-  );
-
+  localStorage.setItem("username", username);
 }
-
 /* ======================================================
    VARIABLES
 ====================================================== */
